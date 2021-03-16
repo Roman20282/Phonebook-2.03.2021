@@ -1,0 +1,13 @@
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\bin\Debug\netcoreapp3.1\PhoneBook-10.02.exe
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\bin\Debug\netcoreapp3.1\PhoneBook-10.02.deps.json
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\bin\Debug\netcoreapp3.1\PhoneBook-10.02.runtimeconfig.json
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\bin\Debug\netcoreapp3.1\PhoneBook-10.02.runtimeconfig.dev.json
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\bin\Debug\netcoreapp3.1\PhoneBook-10.02.dll
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\bin\Debug\netcoreapp3.1\PhoneBook-10.02.pdb
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\obj\Debug\netcoreapp3.1\PhoneBook-10.02.csprojAssemblyReference.cache
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\obj\Debug\netcoreapp3.1\PhoneBook-10.02.AssemblyInfoInputs.cache
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\obj\Debug\netcoreapp3.1\PhoneBook-10.02.AssemblyInfo.cs
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\obj\Debug\netcoreapp3.1\PhoneBook-10.02.csproj.CoreCompileInputs.cache
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\obj\Debug\netcoreapp3.1\PhoneBook-10.02.dll
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\obj\Debug\netcoreapp3.1\PhoneBook-10.02.pdb
+C:\Users\чпу\Source\Repos\Roman20282\Phonebook-2.03.2021\obj\Debug\netcoreapp3.1\PhoneBook-10.02.genruntimeconfig.cache

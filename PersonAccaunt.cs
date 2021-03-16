@@ -5,12 +5,12 @@ namespace Phonebook
     public class PersonAccaunt
     {
         #region Filds
-        static int ID = 0;     // Namber of records in PhoneBook
+        //static int ID = 0;     // Namber of records in PhoneBook
         string firstName;
         string lastName;
         string cityOfResidence;
         uint postIndex;
-        int personalID;
+        //int personalID;
         string cityStreet;
         uint numberOfHous;
         uint apartmentNumber;
@@ -25,7 +25,7 @@ namespace Phonebook
             LastName = soname;
             CityOfResidence = city;
             PostIndex = index;
-            PersonalID = ID;
+            //PersonalID = ID;
             CityStreet = strt;
             NumberOfHous = hous;
             ApartmentNumber = kv;
@@ -74,14 +74,14 @@ namespace Phonebook
                 else postIndex = 0;
             }
         }
-        public int PersonalID
-        {
-            get { return personalID; }
-            set
-            {
-                personalID = ID;
-            }
-        }
+        //public int PersonalID
+        //{
+        //    get { return personalID; }
+        //    set
+        //    {
+        //        personalID = ID;
+        //    }
+        //}
         public string CityStreet
         {
             get { return cityStreet; }
@@ -130,14 +130,14 @@ namespace Phonebook
         }
         #endregion
         #region Methods
-        public static int GetID()
-        {
-            return ID;
-        }
-        public static void SetID()
-        {
-            ID++;
-        }
+        //public static int GetID()
+        //{
+        //    return ID;
+        //}
+        //public static void SetID()
+        //{
+        //    ID++;
+        //}
         #endregion  
     }
 }

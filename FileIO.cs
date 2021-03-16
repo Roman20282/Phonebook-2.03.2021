@@ -11,6 +11,12 @@ namespace Phonebook
     {
         public static PersonAccaunt p = new PersonAccaunt();
         #region ShowMainMenu
+        /// <summary>
+        /// The method displays the main menu of the program.
+        /// Depending on the user's choice, the method of the corresponding menu item is called. 
+        /// To exit the program, you need to type "enter". 
+        /// The method works by checking the correctness of the entered menu item.
+        /// </summary>
         public static void ShowMainMenu()
         {
             string ch;
@@ -88,6 +94,10 @@ namespace Phonebook
         }
         #endregion
         #region GetPathForFile
+        /// <summary>
+        /// The method asks for the path to an existing or future phone book file phonebook.txt
+        /// </summary>
+        /// <returns></returns>
         public static string GetPathForFile()
         {
             Console.Write("Input path for file phonebook.txt:   ");
@@ -96,25 +106,31 @@ namespace Phonebook
         #endregion
 
         #region 1_CreateNewPhoneBook
+        /// <summary>
+        /// This method, before starting its work, asks the user type absolute path for file of the future phonebook by wich it will be created. 
+        /// If this path exists, the method displays message about this, otherwise it offers to create a folder with a file in the current directory.
+        /// After that, it requests with verification from the user abonent's data and displays their final set on the screen.
+        /// If everything is correct, data is added to the phonebook, otherwise user can enter the data again.
+        /// </summary>
         public static void CreateNewPhoneBook()
         {
             StringBuilder sb = new StringBuilder();
             var currentDirectory = Directory.GetCurrentDirectory();
             var phoneBookDirectory = Directory.CreateDirectory(Path.Combine(currentDirectory, "PhoneBookDir"));
             var continueInputOk = true;
-            string str_n, str_ln, str_c, str_s;
-            uint i, n_h, n_a, n_m;
+            string abonentName, abonentLastName, abonentCity, abonentStreet;
+            uint abonentIndex, abonentHous, abonentApartment, abonentPhoneNamber;
             while (continueInputOk)
             {
-                var str = GetPathForFile();
+                var enteredPath = GetPathForFile();
                 try
                 {
-                    if (Directory.Exists(str))
+                    if (Directory.Exists(enteredPath))
                     {
                         Console.WriteLine("Directory exist.");
                         try
                         {
-                            var phoneBookDirectory1 = Directory.CreateDirectory(Path.Combine(str, "PhoneBookDir"));
+                            var phoneBookDirectory1 = Directory.CreateDirectory(Path.Combine(enteredPath, "PhoneBookDir"));
                             phoneBookDirectory = phoneBookDirectory1;
                             continueInputOk = false;
                         }
@@ -147,8 +163,23 @@ namespace Phonebook
             continueInputOk = true;
             while (continueInputOk)
             {
-                CheckInputDataPerson(out str_n, out str_ln, out str_c, out i, out str_s, out n_h, out n_a, out n_m);
-                var person = new PersonAccaunt(str_n, str_ln, str_c, i, str_s, n_h, n_a, n_m);
+                CheckInputDataPerson(out abonentName,
+                                     out abonentLastName, 
+                                     out abonentCity, 
+                                     out abonentIndex, 
+                                     out abonentStreet, 
+                                     out abonentHous, 
+                                     out abonentApartment, 
+                                     out abonentPhoneNamber);
+
+                var person = new PersonAccaunt(abonentName,
+                                               abonentLastName,
+                                               abonentCity, 
+                                               abonentIndex,
+                                               abonentStreet, 
+                                               abonentHous, 
+                                               abonentApartment,
+                                               abonentPhoneNamber);
                 DisplayPersonAccaunt(person);
                 Console.WriteLine("===============================================\n");
                 Console.Write("Is all right? Add this person in Phone Book? y/n     ");
@@ -165,23 +196,40 @@ namespace Phonebook
 
             }
             ShowMainMenu();
+            
             #region CheckInputDataPerson
-            static void CheckInputDataPerson(out string str_n, out string str_ln, out string str_c, out uint i, out string str_s, out uint n_h, out uint n_a, out uint n_m)
+            /// <summary>
+            /// Block for checking entered numeric and integer data
+            /// </summary>
+
+            static void CheckInputDataPerson(out string abonentName,
+                                             out string abonentLastName, 
+                                             out string abonentCity,
+                                             out uint abonentIndexi, 
+                                             out string abonentStreet, 
+                                             out uint abonentHous, 
+                                             out uint abonentApartment, 
+                                             out uint abonentPhoneNamber)
             {
-                CheckOnCorrectStringData("First Name", out str_n);
-                CheckOnCorrectStringData("Last Name", out str_ln);
-                CheckOnCorrectStringData("City", out str_c);
-                CheckOnCorrectIntData("Post index", out i);
-                PersonAccaunt.SetID();
-                CheckOnCorrectStringData("Street", out str_s);
-                CheckOnCorrectIntData("Number of hous", out n_h);
-                CheckOnCorrectIntData("Number of apartment", out n_a);
+                CheckOnCorrectStringData("First Name", out abonentName);
+                CheckOnCorrectStringData("Last Name", out abonentLastName);
+                CheckOnCorrectStringData("City", out abonentCity);
+                CheckOnCorrectIntData("Post index", out abonentIndexi);
+
+                CheckOnCorrectStringData("Street", out abonentStreet);
+                CheckOnCorrectIntData("Number of hous", out abonentHous);
+                CheckOnCorrectIntData("Number of apartment", out abonentApartment);
                 Console.WriteLine("Enter mobil phone number after zero : +380");
-                CheckOnCorrectIntData("Phone number", out n_m);
+                CheckOnCorrectIntData("Phone number", out abonentPhoneNamber);
             }
             #endregion
         }
         #region WritePersonInFile
+        /// <summary>
+        /// Block of writing data to a file
+        /// </summary>
+        /// <param name="sb">temporary data storage</param>
+        /// <param name="phoneBookDirectory">The path to the file</param>
         private static void WritePersonInFile(StringBuilder sb, DirectoryInfo phoneBookDirectory)
         {
             sb.AppendLine("========================================");
@@ -219,19 +267,23 @@ namespace Phonebook
         #endregion
         #endregion
         #region 2_DeletePhoneBook
+        /// <summary>
+        /// Delete the phonebook at the entered path
+        /// </summary>
         public static void DeletePhoneBook()
+        
         {
-            var str = GetPathForFile();
-            str = str + "\\phonebook.txt";
-            if (File.Exists(str))
+            var enteredPath = GetPathForFile();
+            enteredPath = enteredPath + "\\phonebook.txt";
+            if (File.Exists(enteredPath))
             {
                 Console.WriteLine("File exist.");
                 try
                 {
-                    Console.Write("Delete this file: " + str + " ?   y/n    ");
+                    Console.Write("Delete this file: " + enteredPath + " ?   y/n    ");
                     if (Console.ReadLine() == "y")
                     {
-                        File.Delete(str);
+                        File.Delete(enteredPath);
                         Console.WriteLine("File deleted...");
                         System.Threading.Thread.Sleep(3000);
                     }
@@ -243,7 +295,7 @@ namespace Phonebook
                     System.Threading.Thread.Sleep(8000);
                 }
             }
-            else if (!File.Exists(str))
+            else if (!File.Exists(enteredPath))
             {
                 Console.WriteLine("File not exist.");
                 System.Threading.Thread.Sleep(3000);
@@ -253,6 +305,10 @@ namespace Phonebook
         }
         #endregion
         #region 3_EditPhoneBook
+        /// <summary>
+        /// Opens a phonebook file located at entered path using Notepad for editing, if file exist
+        /// Notepad is assumed to be in the Windows folder c:\Windows\
+        /// </summary>
         public static void EditPhoneBook()
         {
             string fullSourseFilePath;
@@ -295,6 +351,11 @@ namespace Phonebook
 
         #endregion
         #region 4_CopyPhoneBook
+        /// <summary>
+        /// Copies a file, if file exists, from one specified location to another specified location. 
+        /// If the destination path does not exist it can be created. 
+        /// If the file at the specified path already exists, it can be overwritten.
+        /// </summary>
         public static void CopyPhoneBook()
         {
             string fullSourseFilePath, fullTargetFilePath, targetFilePath;
@@ -419,11 +480,14 @@ namespace Phonebook
 
         #endregion
         #region 5_PrintConsolePhoneBook
+        /// <summary>
+        /// Displays contents of the phonebook the specified path on the screen
+        /// </summary>
         public static void PrintConsolePhoneBook()
         {
-            var str = GetPathForFile();
-            str = str + "\\phonebook.txt";
-            if (!File.Exists(Convert.ToString(str)))
+            var enteredPath = GetPathForFile();
+            enteredPath = enteredPath + "\\phonebook.txt";
+            if (!File.Exists(Convert.ToString(enteredPath)))
             {
                 Console.WriteLine("Error 404. File not found.   ");
                 System.Threading.Thread.Sleep(8000);
@@ -433,7 +497,7 @@ namespace Phonebook
                 Console.WriteLine("File exist.");
                 System.Threading.Thread.Sleep(3000);
                 Console.Clear();
-                AllFromFileToScreen(str);
+                AllFromFileToScreen(enteredPath);
                 Console.ReadLine();
             }
             Console.Clear();
@@ -441,6 +505,9 @@ namespace Phonebook
         }
         #endregion
         #region 6_RenamePhoneBook
+        /// <summary>
+        /// Renames the phone book file at the specified path
+        /// </summary>
         public static void RenamePhoneBook()
         {
             var targetPath = GetPathForFile();
@@ -474,30 +541,37 @@ namespace Phonebook
         }
         #endregion
         #region 7_FindSomeThingInPhoneBook
+        /// <summary>
+        /// Search for a abonent by a specified parameter
+        /// </summary>
         public static void FindSomeThingInPhoneBook()
         {
-                var strPathPhonebook = GetPathForFile();
-                strPathPhonebook += "\\phonebook.txt";
-                if (!File.Exists(Convert.ToString(strPathPhonebook)))
+                var enteredPath = GetPathForFile();
+                enteredPath += "\\phonebook.txt";
+                if (!File.Exists(Convert.ToString(enteredPath)))
                 {
                     Console.WriteLine("Error 404. File not found.   ");
                     System.Threading.Thread.Sleep(8000);
                 }
                 else
             {
-                ShowMenueForFindSomeThing(strPathPhonebook);
+                ShowMenueForFindSomeThing(enteredPath);
             }
             Console.Clear();
             ShowMainMenu();
             #region FindAndShowSomeThing
-            static void FindAndShowSomeThing(string pathToFile, string choisStr)
+            /// <summary>
+            /// The method sequentially reads from the specified file a block of 10 lines related to a abonent
+            /// and checks for a match with the content. If a match is found, the subscriber data is displayed
+            /// </summary>
+            static void FindAndShowSomeThing(string pathToFile, string choisCase)
                 {
                     var personDivider = "\n===============================================";
                     StringBuilder sb = new StringBuilder();
                     bool continueOk;
                     FileStream fin;
                     string s;
-                    Console.Write("Input {0}:   ", choisStr);
+                    Console.Write("Input {0}:   ", choisCase);
                     var fildStr = Console.ReadLine();
                     
                         try
@@ -549,7 +623,10 @@ namespace Phonebook
                         }
             }
             #region ShowMenueForFindSomeThing
-            static void ShowMenueForFindSomeThing(string str)
+            /// <summary>
+            /// Displays a menu for searching for something in the phonebook
+            /// </summary>
+            static void ShowMenueForFindSomeThing(string toFind)
             {
                 string chStr;
                 bool exitOk = false;
@@ -577,43 +654,43 @@ namespace Phonebook
                             case "1":
                                 {
                                     choisStr = "First name";
-                                    FindAndShowSomeThing(str, choisStr);
+                                    FindAndShowSomeThing(toFind, choisStr);
                                     break;
                                 }
                             case "2":
                                 {
                                     choisStr = "Last name";
-                                    FindAndShowSomeThing(str, choisStr);
+                                    FindAndShowSomeThing(toFind, choisStr);
                                     break;
                                 }
                             case "3":
                                 {
                                     choisStr = "City";
-                                    FindAndShowSomeThing(str, choisStr);
+                                    FindAndShowSomeThing(toFind, choisStr);
                                     break;
                                 }
                             case "4":
                                 {
                                     choisStr = "Street";
-                                    FindAndShowSomeThing(str, choisStr);
+                                    FindAndShowSomeThing(toFind, choisStr);
                                     break;
                                 }
                             case "5":
                                 {
                                     choisStr = "Hous";
-                                    FindAndShowSomeThing(str, choisStr);
+                                    FindAndShowSomeThing(toFind, choisStr);
                                     break;
                                 }
                             case "6":
                                 {
                                     choisStr = "Apartment";
-                                    FindAndShowSomeThing(str, choisStr);
+                                    FindAndShowSomeThing(toFind, choisStr);
                                     break;
                                 }
                             case "7":
                                 {
                                     choisStr = "Phone";
-                                    FindAndShowSomeThing(str, choisStr);
+                                    FindAndShowSomeThing(toFind, choisStr);
                                     break;
                                 }
                             case "exit":
@@ -638,20 +715,24 @@ namespace Phonebook
         #endregion
 
         #region AddNewAccauntPersonInPhoneBook
-        public static void AddNewAccauntPersonInPhoneBook(PersonAccaunt p, string str_path)
+        /// <summary>
+        /// Writing data to a file using streams
+        /// </summary>
+        /// <param name="p">class instance</param>
+        /// <param name="pathToFile">the path to the file</param>
+        public static void AddNewAccauntPersonInPhoneBook(PersonAccaunt p, string pathToFile)
         {
-            FileStream fout;    // Открыть сначала поток файлового ввода-вывода,  
+            FileStream fout;    // Open file I / O stream first
             try
             {
-                fout = new FileStream(str_path, FileMode.Append);
+                fout = new FileStream(pathToFile, FileMode.Append);
             }
             catch (IOException exc)
             {
                 Console.WriteLine("Error open file: " + exc.Message);
                 return;
             }
-            // Заключить поток файлового ввода-вывода   
-            //в оболочку класса StreamWriter.   
+            //Enclose file's I/O stream in the StreamWriter class.
             StreamWriter fstr_out = new StreamWriter(fout);
             try
             {
@@ -679,13 +760,17 @@ namespace Phonebook
         }
         #endregion
         #region AllFromFileToScreen
-        public static void AllFromFileToScreen(string str_path)
+        /// <summary>
+        /// Output from file to screen via FileStream
+        /// </summary>
+        /// <param name="pathToFile"></param>
+        public static void AllFromFileToScreen(string pathToFile)
         {
             FileStream fin;
             string s;
             try
             {
-                fin = new FileStream(str_path, FileMode.Open);
+                fin = new FileStream(pathToFile, FileMode.Open);
             }
             catch (IOException exc)
             {
@@ -716,6 +801,11 @@ namespace Phonebook
         //===========================
 
         #region Check String Data
+        /// <summary>
+        /// checking string data for length
+        /// </summary>
+        /// <param name="nameP">name of parametr</param>
+        /// <param name="param">value of parametr</param>
         static void CheckOnCorrectStringData(string nameP, out string param)
         {
             string p = "";
@@ -741,6 +831,11 @@ namespace Phonebook
         }
         #endregion
         #region Check Int Data
+        /// <summary>
+        /// checking the correctness of numerical data
+        /// </summary>
+        /// <param name="nameP">name of parametr</param>
+        /// <param name="param">value of parametr</param>
         static void CheckOnCorrectIntData(string nameP, out uint param)
         {
             uint p = 0;
@@ -771,6 +866,10 @@ namespace Phonebook
         }
         #endregion
         #region Method that Display Person Accaunt data on Console
+        /// <summary>
+        /// Method for displaying the current values ​​of class fields
+        /// </summary>
+        /// <param name="p"></param>
         public static void DisplayPersonAccaunt(PersonAccaunt p)
         {
             Console.Clear();
