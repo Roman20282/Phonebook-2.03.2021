@@ -20,8 +20,8 @@ namespace Phonebook
         public static void ShowMainMenu()
         {
             string ch;
-            bool exitOk = false;
-            while (!exitOk)
+            bool Eexit = false;
+            while (!Eexit)
             {
                 Console.Clear();
                 Console.Write("**********************The program PhonBook************************\n");
@@ -38,7 +38,7 @@ namespace Phonebook
                 Console.Write("|================================================================|\n");
 
                 Console.Write("Make your choice :   "); ch = Console.ReadLine();
-                if (ch == "exit") { exitOk = true; break; }
+                if (ch == "exit") Eexit = true;
                 else
                 {
                     switch (ch)
@@ -78,17 +78,13 @@ namespace Phonebook
                                 FindSomeThingInPhoneBook();
                                 break;
                             }
-                        case "exit":
-                            {
-                                exitOk = true; break;
-                            }
                         default:
                             {
                                 Console.WriteLine("Error menue case. Try again, or type \" exit \" to stop program.");
                                 break;
                             }
                     }
-                    exitOk = false;
+                    
                 }
             }
         }
