@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace Phonebook
+namespace Phonebook_v2._2
 {
     class Program
     {
@@ -12,4 +12,3 @@ namespace Phonebook
         }
     }
 }
-

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Phonebook
+namespace Phonebook_v2._2
 {
-    static class TimeUtilClass
+    class TimeUtilClass
     {
         public static void PrintTime()
         {
@@ -14,4 +16,3 @@ namespace Phonebook
         }
     }
 }
-
