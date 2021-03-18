@@ -146,13 +146,13 @@ namespace Phonebook_v2._2
                                                abonentHous,
                                                abonentApartment,
                                                abonentPhoneNamber);
-                DisplayPersonAccaunt(person);
+                PersonAccaunt.DisplayPersonAccaunt(person);
                 Console.WriteLine("===============================================\n");
                 Console.Write("Is all right? Add this person in Phone Book? y/n     ");
                 if (Console.ReadLine() == "y")
                 {
                     p = person;
-                    WritePersonInFile(sb, phoneBookDirectory);
+                    p.WritePersonInFile(sb, phoneBookDirectory);
                     Console.WriteLine("Abonent added...");
                     Console.Write("Add new abonent? y/n ");
                     if (Console.ReadLine() == "y") Console.Clear();
@@ -187,47 +187,7 @@ namespace Phonebook_v2._2
             }
             #endregion
         }
-        #region WritePersonInFile
-        /// <summary>
-        /// Block of writing data to a file
-        /// </summary>
-        /// <param name="sb">temporary data storage</param>
-        /// <param name="phoneBookDirectory">The path to the file</param>
-        private static void WritePersonInFile(StringBuilder sb, DirectoryInfo phoneBookDirectory)
-        {
-            sb.AppendLine("========================================");
-            sb.AppendLine("First name            :  " + p.FirstName);
-            sb.AppendLine("Last name             :  " + p.LastName);
-            sb.AppendLine("City                  :  " + p.CityOfResidence);
-            if (p.PostIndex == 0)
-                sb.AppendLine("Post index            :  unknown");
-            else
-                sb.AppendLine("Post index            :  " + p.PostIndex);
-            sb.AppendLine("Street                :  " + p.CityStreet);
-            if (p.NumberOfHous == 0)
-                sb.AppendLine("Hous                  :  unknown");
-            else
-                sb.AppendLine("Hous                  :  " + p.NumberOfHous);
-            if (p.ApartmentNumber == 0)
-                sb.AppendLine("Apartment             :  unknown");
-            else
-                sb.AppendLine("Apartment             :  " + p.ApartmentNumber);
-
-            if (p.MobilPhone == 0)
-                sb.AppendLine("Phone                 :  unknown");
-            else
-                sb.AppendLine("Phone                 :  +380" + p.MobilPhone);
-
-            sb.AppendLine("Time of registration  :  " + p.DateOfRegistration);
-            sb.AppendLine("Date of registration  :  " + p.TimeOfRegistration);
-
-            foreach (var s in sb.ToString())
-            {
-                File.AppendAllText(Path.Combine(Convert.ToString(phoneBookDirectory), "phonebook.txt"), $"{s}");
-            }
-            sb.Clear();
-        }
-        #endregion
+        
         #endregion
         #region 2_DeletePhoneBook
         /// <summary>
@@ -588,7 +548,6 @@ namespace Phonebook_v2._2
                     }
                     while (continueOk);
                     Console.WriteLine("Press any key...");
-                    Console.ReadLine();
                 }
                 catch (IOException exc)
                 {
@@ -848,44 +807,6 @@ namespace Phonebook_v2._2
             Console.WriteLine();
         }
         #endregion
-        #region Method that Display Person Accaunt data on Console
-        /// <summary>
-        /// Method for displaying the current values ​​of class fields
-        /// </summary>
-        /// <param name="p"></param>
-        public static void DisplayPersonAccaunt(PersonAccaunt p)
-        {
-            Console.Clear();
-            Console.WriteLine("----------------------------");
-            Console.WriteLine("First name            :  {0}", p.FirstName);
-            Console.WriteLine("Last name             :  {0}", p.LastName);
-            Console.WriteLine("City                  :  {0}", p.CityOfResidence);
-
-            if (p.PostIndex == 0)
-                Console.WriteLine("Post index            :  unknown");
-            else
-                Console.WriteLine("Post index            :  {0}", p.PostIndex);
-
-            Console.WriteLine("Street                :  {0}", p.CityStreet);
-
-            if (p.NumberOfHous == 0)
-                Console.WriteLine("Hous                  :  unknown");
-            else
-                Console.WriteLine("Hous                  :  {0}", p.NumberOfHous);
-
-            if (p.ApartmentNumber == 0)
-                Console.WriteLine("Apartment             :  unknown");
-            else
-                Console.WriteLine("Apartment             :  {0}", p.ApartmentNumber);
-
-            if (p.MobilPhone == 0)
-                Console.WriteLine("Phone                 :  unknown");
-            else
-                Console.WriteLine("Phone                 :  +380{0}", p.MobilPhone);
-
-            Console.WriteLine("Time of registration  :  {0}", p.DateOfRegistration);
-            Console.WriteLine("Date of registration  :  {0}", p.TimeOfRegistration);
-        }
-        #endregion
+        
     }
 }
