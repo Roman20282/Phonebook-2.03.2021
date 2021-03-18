@@ -17,8 +17,8 @@ namespace Phonebook_v2._2
         /// </summary>
         public static void ShowMainMenu()
         {
-            bool Eexit = false;
-            while (!Eexit)
+            bool Exit = false;
+            while (!Exit)
             {
                 Console.Clear();
                 Console.Write("**********************The program PhonBook************************\n");
@@ -49,7 +49,7 @@ namespace Phonebook_v2._2
                 }
                 else
                 {
-                    Eexit = true;
+                    Exit = true;
 
                 }
             }
