@@ -1,16 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Phonebook
+namespace Phonebook_v2._2
 {
-    public class PersonAccaunt
+    class PersonAccaunt
     {
         #region Filds
-        //static int ID = 0;     // Namber of records in PhoneBook
         string firstName;
         string lastName;
         string cityOfResidence;
         uint postIndex;
-        //int personalID;
         string cityStreet;
         uint numberOfHous;
         uint apartmentNumber;
@@ -19,7 +19,7 @@ namespace Phonebook
         readonly string timeOfRegistration;
         #endregion
         #region Constructors
-        public PersonAccaunt(string name ="", string soname="", string city="", uint index=0, string strt="", uint hous=0, uint kv=0, uint phone=0) 
+        public PersonAccaunt(string name = "", string soname = "", string city = "", uint index = 0, string strt = "", uint hous = 0, uint kv = 0, uint phone = 0)
         {
             FirstName = name;
             LastName = soname;
@@ -52,7 +52,7 @@ namespace Phonebook
             {
                 if (!String.IsNullOrEmpty(value) && !String.IsNullOrWhiteSpace(value))
                     lastName = value;
-                else lastName = "unknown"; 
+                else lastName = "unknown";
             }
         }
         public string CityOfResidence
@@ -62,7 +62,7 @@ namespace Phonebook
             {
                 if (!String.IsNullOrEmpty(value) && !String.IsNullOrWhiteSpace(value))
                     cityOfResidence = value;
-                else cityOfResidence = "unknown"; 
+                else cityOfResidence = "unknown";
             }
         }
         public uint PostIndex
@@ -74,14 +74,7 @@ namespace Phonebook
                 else postIndex = 0;
             }
         }
-        //public int PersonalID
-        //{
-        //    get { return personalID; }
-        //    set
-        //    {
-        //        personalID = ID;
-        //    }
-        //}
+        
         public string CityStreet
         {
             get { return cityStreet; }
