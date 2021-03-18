@@ -3,11 +3,9 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 
-
-
-namespace Phonebook
+namespace Phonebook_v2._2
 {
-    public class FileIO
+    class FileIO
     {
         public static PersonAccaunt p = new PersonAccaunt();
         #region ShowMainMenu
@@ -19,7 +17,6 @@ namespace Phonebook
         /// </summary>
         public static void ShowMainMenu()
         {
-            string ch;
             bool Eexit = false;
             while (!Eexit)
             {
@@ -37,54 +34,23 @@ namespace Phonebook
                 Console.Write("|                     7) Find some thing in PhoneBook            |\n");
                 Console.Write("|================================================================|\n");
 
-                Console.Write("Make your choice :   "); ch = Console.ReadLine();
-                if (ch == "exit") Eexit = true;
+                Console.Write("Make your choice :   "); 
+                string ch = Console.ReadLine();
+                if (ch != "exit")
+                {
+                    if (ch == "1") CreateNewPhoneBook();    else
+                    if (ch == "2") DeletePhoneBook();       else
+                    if (ch == "3") EditPhoneBook();         else
+                    if (ch == "4") CopyPhoneBook();         else
+                    if (ch == "5") PrintConsolePhoneBook(); else
+                    if (ch == "6") RenamePhoneBook();       else
+                    if (ch == "7") FindSomeThingInPhoneBook(); 
+                    else Console.WriteLine("Error menue case. Try again, or type \" exit \" to stop program.");
+                }
                 else
                 {
-                    switch (ch)
-                    {
-                        case "1":
-                            {
-                                CreateNewPhoneBook();
-                                break;
-                            }
-                        case "2":
-                            {
-                                DeletePhoneBook();
-                                break;
-                            }
-                        case "3":
-                            {
-                                EditPhoneBook();
-                                break;
-                            }
-                        case "4":
-                            {
-                                CopyPhoneBook();
-                                break;
-                            }
-                        case "5":
-                            {
-                                PrintConsolePhoneBook();
-                                break;
-                            }
-                        case "6":
-                            {
-                                RenamePhoneBook();
-                                break;
-                            }
-                        case "7":
-                            {
-                                FindSomeThingInPhoneBook();
-                                break;
-                            }
-                        default:
-                            {
-                                Console.WriteLine("Error menue case. Try again, or type \" exit \" to stop program.");
-                                break;
-                            }
-                    }
-                    
+                    Eexit = true;
+
                 }
             }
         }
@@ -134,6 +100,8 @@ namespace Phonebook
                         {
                             Console.WriteLine("Imposible to create file by entered path.\n");
                             Console.WriteLine(ex.Message + "\n\n");
+                            Console.WriteLine("Press any key...");
+                            Console.ReadLine();
                         }
                     }
                     else
@@ -152,6 +120,8 @@ namespace Phonebook
                 {
                     Console.WriteLine("Imposible to create file by this path.\n");
                     Console.WriteLine(ex.ToString() + "\n\n");
+                    Console.WriteLine("Press any key...");
+                    Console.ReadLine();
                 }
 
             }
@@ -160,20 +130,20 @@ namespace Phonebook
             while (continueInputOk)
             {
                 CheckInputDataPerson(out abonentName,
-                                     out abonentLastName, 
-                                     out abonentCity, 
-                                     out abonentIndex, 
-                                     out abonentStreet, 
-                                     out abonentHous, 
-                                     out abonentApartment, 
+                                     out abonentLastName,
+                                     out abonentCity,
+                                     out abonentIndex,
+                                     out abonentStreet,
+                                     out abonentHous,
+                                     out abonentApartment,
                                      out abonentPhoneNamber);
 
                 var person = new PersonAccaunt(abonentName,
                                                abonentLastName,
-                                               abonentCity, 
+                                               abonentCity,
                                                abonentIndex,
-                                               abonentStreet, 
-                                               abonentHous, 
+                                               abonentStreet,
+                                               abonentHous,
                                                abonentApartment,
                                                abonentPhoneNamber);
                 DisplayPersonAccaunt(person);
@@ -182,7 +152,6 @@ namespace Phonebook
                 if (Console.ReadLine() == "y")
                 {
                     p = person;
-                    //person = null;
                     WritePersonInFile(sb, phoneBookDirectory);
                     Console.WriteLine("Abonent added...");
                     Console.Write("Add new abonent? y/n ");
@@ -191,20 +160,18 @@ namespace Phonebook
                 }
 
             }
-            ShowMainMenu();
-            
             #region CheckInputDataPerson
             /// <summary>
             /// Block for checking entered numeric and integer data
             /// </summary>
 
             static void CheckInputDataPerson(out string abonentName,
-                                             out string abonentLastName, 
+                                             out string abonentLastName,
                                              out string abonentCity,
-                                             out uint abonentIndexi, 
-                                             out string abonentStreet, 
-                                             out uint abonentHous, 
-                                             out uint abonentApartment, 
+                                             out uint abonentIndexi,
+                                             out string abonentStreet,
+                                             out uint abonentHous,
+                                             out uint abonentApartment,
                                              out uint abonentPhoneNamber)
             {
                 CheckOnCorrectStringData("First Name", out abonentName);
@@ -267,7 +234,7 @@ namespace Phonebook
         /// Delete the phonebook at the entered path
         /// </summary>
         public static void DeletePhoneBook()
-        
+
         {
             var enteredPath = GetPathForFile();
             enteredPath = enteredPath + "\\phonebook.txt";
@@ -281,23 +248,25 @@ namespace Phonebook
                     {
                         File.Delete(enteredPath);
                         Console.WriteLine("File deleted...");
-                        System.Threading.Thread.Sleep(3000);
+                        Console.WriteLine("Press any key...");
+                        Console.ReadLine();
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Imposible to delate file by entered path.\n");
                     Console.WriteLine(ex.Message + "\n\n");
-                    System.Threading.Thread.Sleep(8000);
+                    Console.WriteLine("Press any key...");
+                    Console.ReadLine();
                 }
             }
             else if (!File.Exists(enteredPath))
             {
                 Console.WriteLine("File not exist.");
-                System.Threading.Thread.Sleep(3000);
+                Console.WriteLine("Press any key...");
+                Console.ReadLine();
             }
-            Console.Clear();
-            ShowMainMenu();
+            
         }
         #endregion
         #region 3_EditPhoneBook
@@ -322,7 +291,7 @@ namespace Phonebook
                         notepadExe = dirs[0];
                         Console.WriteLine("Open file {0} ...", fullSourseFilePath);
                         Console.WriteLine("Edit and save file.");
-                        System.Threading.Thread.Sleep(3000);
+                        System.Threading.Thread.Sleep(2000);
                         Process.Start(Convert.ToString(notepadExe), Convert.ToString(fullSourseFilePath));
                         Console.ReadKey();
                     }
@@ -331,6 +300,7 @@ namespace Phonebook
                 {
                     Console.WriteLine("Path for notepad.exe not found...");
                     Console.WriteLine(ex.Message);
+                    Console.WriteLine("Press any key...");
                     Console.ReadLine();
                 }
 
@@ -339,10 +309,10 @@ namespace Phonebook
             else
             {
                 Console.WriteLine("File not exist.");
-                System.Threading.Thread.Sleep(3000);
+                Console.WriteLine("Press any key...");
+                Console.ReadLine();
             }
-            Console.Clear();
-            ShowMainMenu();
+            
         }
 
         #endregion
@@ -375,7 +345,7 @@ namespace Phonebook
                     if (Console.ReadLine() == "n")
                     {
                         Console.WriteLine("Ok. Make another chois.");
-                        System.Threading.Thread.Sleep(3000);
+                        System.Threading.Thread.Sleep(1000);
                     }
                     else
                     {
@@ -384,13 +354,14 @@ namespace Phonebook
                             Directory.CreateDirectory(targetFilePath);
                             Console.WriteLine("Path {0} created...", targetFilePath);
                             targetPathExist = true;
-                            System.Threading.Thread.Sleep(3000);
+                            System.Threading.Thread.Sleep(1000);
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine("Imposible to create this path.");
                             Console.WriteLine(ex.Message);
-                            System.Threading.Thread.Sleep(8000);
+                            Console.WriteLine("Press any key...");
+                            Console.ReadLine();
                         }
                     }
                 }
@@ -406,13 +377,14 @@ namespace Phonebook
                                 if (Console.ReadLine() == "n")
                                 {
                                     Console.WriteLine("Copy file dinied...");
-                                    System.Threading.Thread.Sleep(3000);
+                                    System.Threading.Thread.Sleep(2000);
                                 }
                                 else
                                 {
                                     File.Copy(fullSourseFilePath, fullTargetFilePath, true);
                                     Console.WriteLine("File copied...");
-                                    System.Threading.Thread.Sleep(3000);
+                                    Console.WriteLine("Press any key...");
+                                    Console.ReadLine();
 
                                 }
                             }
@@ -420,7 +392,8 @@ namespace Phonebook
                             {
                                 File.Copy(fullSourseFilePath, fullTargetFilePath);
                                 Console.WriteLine("File copied...");
-                                System.Threading.Thread.Sleep(3000);
+                                Console.WriteLine("Press any key...");
+                                Console.ReadLine();
                             }
 
                         }
@@ -428,7 +401,8 @@ namespace Phonebook
                         {
                             Console.WriteLine("Imposible to copy file by entered path.\n");
                             Console.WriteLine(ex.Message + "\n\n");
-                            System.Threading.Thread.Sleep(20000);
+                            Console.WriteLine("Press any key...");
+                            Console.ReadLine();
                         }
                     else
                     {
@@ -451,14 +425,15 @@ namespace Phonebook
 
                             File.Copy(fullSourseFilePath, fullTargetFilePath, overwrite: f);
                             Console.WriteLine("File copied...");
-                            System.Threading.Thread.Sleep(3000);
+                            Console.WriteLine("Press any key...");
+                            Console.ReadLine();
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine("\nImposible to copy file by entered path.");
                             Console.WriteLine(ex.Message + "\n\n");
-                            System.Threading.Thread.Sleep(8000);
-                            Console.ReadKey();
+                            Console.WriteLine("Press any key...");
+                            Console.ReadLine();
                         }
 
                     }
@@ -468,10 +443,10 @@ namespace Phonebook
             else if (!File.Exists(fullSourseFilePath))
             {
                 Console.WriteLine("File not exist.");
-                System.Threading.Thread.Sleep(3000);
+                Console.WriteLine("Press any key...");
+                Console.ReadLine();
             }
-            Console.Clear();
-            ShowMainMenu();
+           
         }
 
         #endregion
@@ -486,18 +461,18 @@ namespace Phonebook
             if (!File.Exists(Convert.ToString(enteredPath)))
             {
                 Console.WriteLine("Error 404. File not found.   ");
-                System.Threading.Thread.Sleep(8000);
+                Console.WriteLine("Press any key...");
+                Console.ReadLine();
             }
             else
             {
                 Console.WriteLine("File exist.");
-                System.Threading.Thread.Sleep(3000);
+                System.Threading.Thread.Sleep(1000);
                 Console.Clear();
                 AllFromFileToScreen(enteredPath);
                 Console.ReadLine();
             }
-            Console.Clear();
-            ShowMainMenu();
+           
         }
         #endregion
         #region 6_RenamePhoneBook
@@ -511,7 +486,8 @@ namespace Phonebook
             if (!File.Exists(Convert.ToString(fullSourseFilePath)))
             {
                 Console.WriteLine("Error 404. File not found.   ");
-                System.Threading.Thread.Sleep(8000);
+                Console.WriteLine("Press any key...");
+                Console.ReadLine();
             }
             else
             {
@@ -523,17 +499,18 @@ namespace Phonebook
                     File.Copy(fullSourseFilePath, targetPath, overwrite: true);
                     Console.WriteLine("File renamed...");
                     File.Delete(fullSourseFilePath);
-                    System.Threading.Thread.Sleep(3000);
+                    Console.WriteLine("Press any key...");
+                    Console.ReadLine();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Imposible to rename file.");
                     Console.WriteLine(ex.Message);
-                    System.Threading.Thread.Sleep(8000);
+                    Console.WriteLine("Press any key...");
+                    Console.ReadLine();
                 }
             }
-            Console.Clear();
-            ShowMainMenu();
+            
         }
         #endregion
         #region 7_FindSomeThingInPhoneBook
@@ -542,81 +519,87 @@ namespace Phonebook
         /// </summary>
         public static void FindSomeThingInPhoneBook()
         {
-                var enteredPath = GetPathForFile();
-                enteredPath += "\\phonebook.txt";
-                if (!File.Exists(Convert.ToString(enteredPath)))
-                {
-                    Console.WriteLine("Error 404. File not found.   ");
-                    System.Threading.Thread.Sleep(8000);
-                }
-                else
+            var enteredPath = GetPathForFile();
+            enteredPath += "\\phonebook.txt";
+            if (!File.Exists(Convert.ToString(enteredPath)))
+            {
+                Console.WriteLine("Error 404. File not found.   ");
+                Console.WriteLine("Press any key...");
+                Console.ReadLine();
+            }
+            else
             {
                 ShowMenueForFindSomeThing(enteredPath);
             }
-            Console.Clear();
-            ShowMainMenu();
+            
             #region FindAndShowSomeThing
             /// <summary>
             /// The method sequentially reads from the specified file a block of 10 lines related to a abonent
             /// and checks for a match with the content. If a match is found, the subscriber data is displayed
             /// </summary>
             static void FindAndShowSomeThing(string pathToFile, string choisCase)
+            {
+                var personDivider = "\n===============================================";
+                StringBuilder sb = new StringBuilder();
+                bool continueOk;
+                FileStream fin;
+                string s;
+                Console.Write("Input {0}:   ", choisCase);
+                var fild = Console.ReadLine();
+
+                try
                 {
-                    var personDivider = "\n===============================================";
-                    StringBuilder sb = new StringBuilder();
-                    bool continueOk;
-                    FileStream fin;
-                    string s;
-                    Console.Write("Input {0}:   ", choisCase);
-                    var fildStr = Console.ReadLine();
-                    
-                        try
+                    fin = new FileStream(pathToFile, FileMode.Open);
+                    Console.WriteLine("File opening...");
+                    System.Threading.Thread.Sleep(1000);
+                }
+                catch (IOException exc)
+                {
+                    Console.WriteLine("Error open file:" + exc.Message);
+                    Console.WriteLine("Press any key...");
+                    Console.ReadLine();
+                    return;
+                }
+                StreamReader fstr_in = new StreamReader(fin);
+                try
+                {
+                    do
+                    {
+                        continueOk = true;
+                        s = fstr_in.ReadLine();
+                        if ((s != personDivider) & (s != null))
                         {
-                            fin = new FileStream(pathToFile, FileMode.Open);
-                            Console.WriteLine("File opening...");
-                            System.Threading.Thread.Sleep(3000);
-                        }
-                        catch (IOException exc)
-                        {
-                            Console.WriteLine("Error open file:" + exc.Message);
-                            return;
-                        }
-                        StreamReader fstr_in = new StreamReader(fin);
-                        try
-                        {
-                            do
+                            for (int i = 0; i < 10; i++)
                             {
-                                continueOk = true;
                                 s = fstr_in.ReadLine();
-                                if ((s != personDivider) & (s != null))
-                                {
-                                    for (int i = 0; i < 10; i++)
-                                    {
-                                        s = fstr_in.ReadLine();
-                                        sb.AppendLine(s);
-                                    }
-                                }
-                                else if (s == null) continueOk = false;
-                                
-                                s = sb.ToString();
-                                sb.Clear();
-                                if (s.Contains(fildStr))
-                                {
-                                     Console.WriteLine(personDivider);
-                                     Console.WriteLine(s);
-                                }
-                                s = "";
+                                sb.AppendLine(s);
                             }
-                            while (continueOk);
                         }
-                        catch (IOException exc)
+                        else if (s == null) continueOk = false;
+
+                        s = sb.ToString();
+                        sb.Clear();
+                        if (s.Contains(fild))
                         {
-                            Console.WriteLine("Error input/output:\n" + exc.Message);
+                            Console.WriteLine(personDivider);
+                            Console.WriteLine(s);
                         }
-                        finally
-                        {
-                            fstr_in.Close();
-                        }
+                        s = "";
+                    }
+                    while (continueOk);
+                    Console.WriteLine("Press any key...");
+                    Console.ReadLine();
+                }
+                catch (IOException exc)
+                {
+                    Console.WriteLine("Error input/output:\n" + exc.Message);
+                    Console.WriteLine("Press any key...");
+                    Console.ReadLine();
+                }
+                finally
+                {
+                    fstr_in.Close();
+                }
             }
             #region ShowMenueForFindSomeThing
             /// <summary>
@@ -624,10 +607,10 @@ namespace Phonebook
             /// </summary>
             static void ShowMenueForFindSomeThing(string toFind)
             {
-                string chStr;
-                bool exitOk = false;
+                string ch;
+                bool Exit = false;
                 Console.WriteLine("File exist.");
-                while (!exitOk)
+                while (!Exit)
                 {
                     Console.Clear();
                     Console.Write("*****************************Find person by*****************************\n");
@@ -642,67 +625,65 @@ namespace Phonebook
                     Console.Write("|=======================================================================|\n");
                     Console.Write("|                            7) Phone number                            |\n");
                     Console.Write("|=======================================================================|\n");
-                    Console.Write("Make your choice :   "); chStr = Console.ReadLine();
-                    string choisStr;
-                    Console.WriteLine(chStr);
-                        switch (chStr)
-                        {
-                            case "1":
-                                {
-                                    choisStr = "First name";
-                                    FindAndShowSomeThing(toFind, choisStr);
-                                    break;
-                                }
-                            case "2":
-                                {
-                                    choisStr = "Last name";
-                                    FindAndShowSomeThing(toFind, choisStr);
-                                    break;
-                                }
-                            case "3":
-                                {
-                                    choisStr = "City";
-                                    FindAndShowSomeThing(toFind, choisStr);
-                                    break;
-                                }
-                            case "4":
-                                {
-                                    choisStr = "Street";
-                                    FindAndShowSomeThing(toFind, choisStr);
-                                    break;
-                                }
-                            case "5":
-                                {
-                                    choisStr = "Hous";
-                                    FindAndShowSomeThing(toFind, choisStr);
-                                    break;
-                                }
-                            case "6":
-                                {
-                                    choisStr = "Apartment";
-                                    FindAndShowSomeThing(toFind, choisStr);
-                                    break;
-                                }
-                            case "7":
-                                {
-                                    choisStr = "Phone";
-                                    FindAndShowSomeThing(toFind, choisStr);
-                                    break;
-                                }
-                            case "exit":
-                                {
-                                    Console.WriteLine(exitOk);
-                                    exitOk = true;
-                                    return;
-                                }
-                            default:
-                                {
-                                    Console.WriteLine("Error menue case. Try again, or type \" exit \" to stop procedure.");
-                                    break;
-                                }
+                    Console.Write("Make your choice :   "); ch = Console.ReadLine();
+                    string choisList;
+                    Console.WriteLine(ch);
+                    switch (ch)
+                    {
+                        case "1":
+                            {
+                                choisList = "First name";
+                                FindAndShowSomeThing(toFind, choisList);
+                                break;
+                            }
+                        case "2":
+                            {
+                                choisList = "Last name";
+                                FindAndShowSomeThing(toFind, choisList);
+                                break;
+                            }
+                        case "3":
+                            {
+                                choisList = "City";
+                                FindAndShowSomeThing(toFind, choisList);
+                                break;
+                            }
+                        case "4":
+                            {
+                                choisList = "Street";
+                                FindAndShowSomeThing(toFind, choisList);
+                                break;
+                            }
+                        case "5":
+                            {
+                                choisList = "Hous";
+                                FindAndShowSomeThing(toFind, choisList);
+                                break;
+                            }
+                        case "6":
+                            {
+                                choisList = "Apartment";
+                                FindAndShowSomeThing(toFind, choisList);
+                                break;
+                            }
+                        case "7":
+                            {
+                                choisList = "Phone";
+                                FindAndShowSomeThing(toFind, choisList);
+                                break;
+                            }
+                        case "exit":
+                            {
+                               return;
+                            }
+                        default:
+                            {
+                                Console.WriteLine("Error menue case. Try again, or type \" exit \" to stop procedure.");
+                                break;
+                            }
 
-                        }
-                        Console.ReadKey();
+                    }
+                    Console.ReadKey();
                 }
             }
             #endregion
@@ -718,7 +699,7 @@ namespace Phonebook
         /// <param name="pathToFile">the path to the file</param>
         public static void AddNewAccauntPersonInPhoneBook(PersonAccaunt p, string pathToFile)
         {
-            FileStream fout;    // Open file I / O stream first
+            FileStream fout;    // Open file I/O stream first
             try
             {
                 fout = new FileStream(pathToFile, FileMode.Append);
@@ -726,6 +707,8 @@ namespace Phonebook
             catch (IOException exc)
             {
                 Console.WriteLine("Error open file: " + exc.Message);
+                Console.WriteLine("Press any key...");
+                Console.ReadLine();
                 return;
             }
             //Enclose file's I/O stream in the StreamWriter class.
@@ -747,7 +730,7 @@ namespace Phonebook
             }
             catch (IOException exc)
             {
-                Console.WriteLine("Ошибка ввода-вывода:\n" + exc.Message);
+                Console.WriteLine("I/O Error:\n " + exc.Message);
             }
             finally
             {
@@ -771,6 +754,8 @@ namespace Phonebook
             catch (IOException exc)
             {
                 Console.WriteLine("Error open file:" + exc.Message);
+                Console.WriteLine("Press any key...");
+                Console.ReadLine();
                 return;
             }
             StreamReader fstr_in = new StreamReader(fin);
@@ -784,6 +769,8 @@ namespace Phonebook
             catch (IOException exc)
             {
                 Console.WriteLine("Error input/output:\n" + exc.Message);
+                Console.WriteLine("Press any key...");
+                Console.ReadLine();
             }
             finally
             {
@@ -902,6 +889,3 @@ namespace Phonebook
         #endregion
     }
 }
-
-
-
